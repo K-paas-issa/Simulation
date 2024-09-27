@@ -1,5 +1,5 @@
 # 베이스 이미지
-FROM python:3.8
+FROM python:3.10.11
 
 # 작업 디렉토리 설정
 WORKDIR /app
