@@ -30,13 +30,13 @@ def simulation(object_name):
 
     final_res = get_AI_server(upload_simulation_data_res) # AI서버로 http 통신 날리기
     
-    return {"message" : final_res}
+    return {"filePath" : final_res}
 
 def get_AI_server(simulation_data):
     resp = requests.get(url=ai_server_base_url + '/simulation-data',
                         params=simulation_data)
     if resp.status_code == 200:
-        return 'success'
+        return resp.text # ai의 output이 ncp object에 저장되어 있는 경로(string) 반환
     else:
         return 'http request exception'
 
