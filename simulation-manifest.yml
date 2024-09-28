@@ -49,4 +49,4 @@ spec:
     - protocol: TCP
       port: 8001
       targetPort: 8001
-  type: ClusterIP  # 클러스터 내에서만 접근 가능
+  type: LoadBalancer  # 개발단계이므로 외부 포트 허용
