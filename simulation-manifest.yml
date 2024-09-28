@@ -36,3 +36,17 @@ spec:
                   key: ai-server-base-url
       imagePullSecrets:
         - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-simulation-server-service
+spec:
+  selector:
+    app: my-simulation-server
+  ports:
+    - protocol: TCP
+      port: 8001
+      targetPort: 8001
+  type: ClusterIP  # 클러스터 내에서만 접근 가능
