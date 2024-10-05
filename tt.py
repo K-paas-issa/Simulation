@@ -9,10 +9,10 @@ import datetime as dt
 from balloon_learning_environment.env import grid_based_wind_field
 
 # @title Generate a wind field
-def main():
+def main(simulation_input_data):
     wind_field = generative_wind_field.GenerativeWindField
     rng = jax.random.PRNGKey(10)
-    df1 = pd.read_csv('./data/data.csv')
+    df1 = pd.read_csv(simulation_input_data)
 
     data = [list(df1.columns)]
     df = pd.DataFrame(data, columns=["1", "2", "3", "4", "5"])
@@ -79,6 +79,6 @@ def main():
 
 
         df=pd.DataFrame(data)
-        re='./sample2.npy'
+        re='./simulation_output.npy'
         np.save(re, np.array(df))
         return re
