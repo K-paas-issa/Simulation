@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import os
 import boto3
-import datetime
+from datetime import datetime, timezone
 import requests
 import tt
 from pytz import timezone, utc
