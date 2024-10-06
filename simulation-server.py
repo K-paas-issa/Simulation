@@ -72,7 +72,7 @@ def upload_csv(local_file_path): # local_file_path는 시뮬레이션 결과로 
     s3.put_object(Bucket=bucket_name, Key=folder_name)
 
     # upload file
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     KST = timezone('Asia/Seoul')
     kst_time = utc.localize(now).astimezone(KST)
     object_name = f'{folder_name}/simulation_output_{kst_time}.npy'
