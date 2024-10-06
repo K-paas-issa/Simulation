@@ -16,7 +16,7 @@ ai_server_base_url = os.getenv('AI_SERVER_BASE_URL')
 app = FastAPI()
 
 @app.get("/climate-data")
-def simulation(object_name):
+def simulation(object_name: str):
     file_name = download_csv(object_name) # simulation_input.csv로 다운받은 상태.
     print(file_name)
 
