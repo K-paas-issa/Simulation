@@ -67,7 +67,7 @@ def upload_csv(local_file_path): # local_file_path는 시뮬레이션 결과로 
     bucket_name = 'contest73-bucket'
 
     # create folder
-    folder_name = 'simulation/'
+    folder_name = 'simulation'
 
     s3.put_object(Bucket=bucket_name, Key=folder_name)
 
