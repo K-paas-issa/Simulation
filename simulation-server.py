@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 import os
 import boto3
-from datetime import datetime, timezone
 import requests
 import tt
-from pytz import timezone, utc
+from datetime import datetime, timezone as dt_timezone
+from pytz import timezone as pytz_timezone, utc
 
 service_name = 's3'
 endpoint_url = 'https://kr.object.ncloudstorage.com'
@@ -72,10 +72,11 @@ def upload_csv(local_file_path): # local_file_path는 시뮬레이션 결과로 
     s3.put_object(Bucket=bucket_name, Key=folder_name)
 
     # upload file
-    now = datetime.now(timezone.utc)
-    KST = timezone('Asia/Seoul')
-    kst_time = utc.localize(now).astimezone(KST)
-    object_name = f'{folder_name}/simulation_output_{kst_time}.npy'
+    now = datetime.now(dt_timezone.utc)
+    KST = pytz_timezone('Asia/Seoul')
+    kst_time = now.astimezone(KST)
+    kst_time_str = kst_time.strftime('%Y%m%d_%H%M%S')
+    object_name = f'{folder_name}/simulation_output_{kst_time_str}.npy'
     try:
         s3.upload_file(local_file_path, bucket_name, object_name)
         return object_name
