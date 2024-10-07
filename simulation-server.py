@@ -5,6 +5,8 @@ import requests
 import tt
 from datetime import datetime, timezone as dt_timezone
 from pytz import timezone as pytz_timezone, utc
+from fastapi import status
+from fastapi import Response
 
 service_name = 's3'
 endpoint_url = 'https://kr.object.ncloudstorage.com'
@@ -31,15 +33,18 @@ def simulation(object_name: str):
 
     final_res = get_AI_server({'path' : upload_simulation_data_res}) # AI서버로 http 통신 날리기
     
-    return {"filePath" : final_res}
+    if final_res==True:
+        return Response(status_code=status.HTTP_202_ACCEPTED)
+    else:
+        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 def get_AI_server(simulation_data : dict):
     resp = requests.get(url=ai_server_base_url + '/simulation-data',
                         params=simulation_data)
     if resp.status_code == 200:
-        return resp.text # ai의 output이 ncp object에 저장되어 있는 경로(string) 반환
+        return True
     else:
-        return 'http request exception'
+        return False
 
 def simulation_implementation(simulation_input_data):
     simulation_output = tt.main(simulation_input_data)
