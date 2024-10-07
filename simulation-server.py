@@ -29,11 +29,11 @@ def simulation(object_name: str):
     upload_simulation_data_res = upload_csv(simulation_output)
     print(upload_simulation_data_res)
 
-    final_res = get_AI_server(upload_simulation_data_res) # AI서버로 http 통신 날리기
+    final_res = get_AI_server({'data_path' : upload_simulation_data_res}) # AI서버로 http 통신 날리기
     
     return {"filePath" : final_res}
 
-def get_AI_server(simulation_data):
+def get_AI_server(simulation_data : dict):
     resp = requests.get(url=ai_server_base_url + '/simulation-data',
                         params=simulation_data)
     if resp.status_code == 200:
