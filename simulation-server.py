@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 import os
 import boto3
 import requests
@@ -18,25 +18,30 @@ ai_server_base_url = os.getenv('AI_SERVER_BASE_URL')
 app = FastAPI()
 
 @app.get("/climate-data")
-def simulation(object_name: str):
+def simulation(object_name: str, background_tasks: BackgroundTasks):
+    background_tasks.add_task(simulation_body, object_name)
+    return Response(status_code=status.HTTP_202_ACCEPTED)
+
+def simulation_body(object_name: str) :
     file_name = download_csv(object_name) # simulation_input.csv로 다운받은 상태.
     print(file_name)
 
     # 실질적으로 이 함수 내부에서 시뮬레이션 하는 코드 작성할 것. csv도 알아서 접근할 것.
     # 이 함수에서 시뮬레이션 돌려서 나온 값을 csv로 저장. csv이름은 simulation_output.csv로 할 것.
-    simulation_output = simulation_implementation(file_name) 
+    simulation_output = simulation_implementation(file_name)
 
     # simulation_output_ + 현재 시간 + .csv 형식으로 파일 업로드
     # upload_csv 응답값 : ncp object에 올라간 시뮬레이션 csv파일 경로
-    upload_simulation_data_res = upload_csv(simulation_output)
+    upload_simulation_data_res = upload_csv(simulation_output) 
     print(upload_simulation_data_res)
 
     final_res = get_AI_server({'path' : upload_simulation_data_res}) # AI서버로 http 통신 날리기
-    
     if final_res==True:
-        return Response(status_code=status.HTTP_202_ACCEPTED)
+        print('reqeust success')
     else:
-        return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        print('request fail')
+
+
 
 def get_AI_server(simulation_data : dict):
     resp = requests.get(url=ai_server_base_url + '/simulation-data',
