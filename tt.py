@@ -67,7 +67,7 @@ def main(simulation_input_data):
                 charge = balloon_state.battery_soc * 100.0
             flight_paths[agent_name].append((balloon_state.x.km, balloon_state.y.km,
                                        altitude.km, charge))
-            data.append([balloon_state.x.km+ 37.9381943,balloon_state.y.k+126.5877948,altitude.km])
+            data.append([balloon_state.x.km+ 631.8,balloon_state.y.km+416.8,altitude.km])
             if i == 0:
                 times.append(balloon_state.date_time)
 
