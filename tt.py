@@ -19,9 +19,12 @@ def main(simulation_input_data):
     df1.columns=["1","2","3","4","5"]
     df1=pd.concat([df,df1])
 
-    wind_field.field = np.zeros((780,602,1,1,2))
-    wind_field.field[:,:,0,0,0] = np.reshape( np.array(df1['4']),newshape=(780,602))
-    wind_field.field[:,:,0,0,1] = np.reshape( np.array(df1['5']),newshape=(780,602))
+    wind_field.field = np.zeros((780,602,24,1,2))
+    for i in [50, 70, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 875, 900, 925, 950, 975, 1000]:
+        start_index = (i - 1) * (780 * 602)  # i에 따라 시작 인덱스를 계산
+        end_index = start_index + (780 * 602)  # 끝 인덱스 계산
+        wind_field.field[:,:,i,0,0] = np.reshape(np.array(df1['4'][start_index:end_index]), newshape=(780, 602))
+        wind_field.field[:,:,i,0,1] = np.reshape(np.array(df1['5'][start_index:end_index]), newshape=(780, 602))
 
     agents = []
     envs = []
