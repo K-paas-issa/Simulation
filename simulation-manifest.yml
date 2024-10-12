@@ -49,4 +49,3 @@ spec:
     - protocol: TCP
       port: 8001
       targetPort: 8001
-  type: LoadBalancer  # 개발단계이므로 외부 포트 허용
