@@ -64,7 +64,7 @@ def main(simulation_input_data):
             balloon_state = sim_state.balloon_state
             if step_count % frame_skip == 0:
                 altitude = sim_state.atmosphere.at_pressure(balloon_state.pressure).height
-            data.append([balloon_state.x.km+ 631.8,balloon_state.y.km+416.8,altitude.km])
+                data.append([balloon_state.x.km+ 631.8,balloon_state.y.km+416.8,altitude.km])
                 if step_count==1:
                     balloon_state.x.km=balloon_state.x.km-10
                     balloon_state.y.km=balloon_state.y.km-130
