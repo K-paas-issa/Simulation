@@ -32,7 +32,7 @@ def main(simulation_input_data):
           observation_shape=envs[-1].observation_space.shape))
 
 #@title Run simulation
-    seed = 0  # @param {type: 'number'}
+    seed = random.randint(1, 120000)
     num_steps = 1200  # @param {type: 'number'}
     frame_skip = 5 # @param {type: 'number'}
 
@@ -64,12 +64,12 @@ def main(simulation_input_data):
             balloon_state = sim_state.balloon_state
             if step_count % frame_skip == 0:
                 altitude = sim_state.atmosphere.at_pressure(balloon_state.pressure).height
-                charge = balloon_state.battery_soc * 100.0
-            flight_paths[agent_name].append((balloon_state.x.km, balloon_state.y.km,
-                                       altitude.km, charge))
             data.append([balloon_state.x.km+ 631.8,balloon_state.y.km+416.8,altitude.km])
-            if i == 0:
-                times.append(balloon_state.date_time)
+                if step_count==1:
+                    balloon_state.x.km=balloon_state.x.km-10
+                    balloon_state.y.km=balloon_state.y.km-130
+                if i == 0:
+                    times.append(balloon_state.date_time)
 
             step_count += 1
 
