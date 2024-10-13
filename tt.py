@@ -21,8 +21,8 @@ def main(simulation_input_data):
     df1.columns=["1","2","3","4","5"]
     df1=pd.concat([df,df1])
 
-    wind_field.field = np.zeros((780,602,24,1,2))
-    for i in range(24):
+    wind_field.field = np.zeros((780,602,3,1,2))
+    for i in range(3):
         start_index = i * (780 * 602)  # i에 따라 시작 인덱스를 계산
         end_index = start_index + (780 * 602)  # 끝 인덱스 계산
         wind_field.field[:,:,i,0,0] = np.reshape(np.array(df1['4'][start_index:end_index]), newshape=(780, 602))
@@ -69,7 +69,7 @@ def main(simulation_input_data):
             balloon_state = sim_state.balloon_state
             if step_count % frame_skip == 0:
                 altitude = sim_state.atmosphere.at_pressure(balloon_state.pressure).height
-                data.append([balloon_state.x.km+ 631.8,balloon_state.y.km+416.8,altitude.km])
+                data.append([balloon_state.x.km,balloon_state.y.km,altitude.km])
                 if step_count==1:
                     balloon_state.x.km=balloon_state.x.km-10
                     balloon_state.y.km=balloon_state.y.km-130
