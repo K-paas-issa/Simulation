@@ -21,9 +21,9 @@ def main(simulation_input_data):
     df1.columns=["1","2","3","4","5"]
     df1=pd.concat([df,df1])
 
-    wind_field.field = np.zeros((780,602,3,1,2))
-    for i in range(3):
-        start_index = i * (780 * 602)  # i에 따라 시작 인덱스를 계산
+    wind_field.field = np.zeros((780,602,5,1,2))
+    for i in range(5):
+        start_index = (i + 13) * (780 * 602)  # i에 따라 시작 인덱스를 계산(고도를 650pha부터 ~)
         end_index = start_index + (780 * 602)  # 끝 인덱스 계산
         wind_field.field[:,:,i,0,0] = np.reshape(np.array(df1['4'][start_index:end_index]), newshape=(780, 602))
         wind_field.field[:,:,i,0,1] = np.reshape(np.array(df1['5'][start_index:end_index]), newshape=(780, 602))
