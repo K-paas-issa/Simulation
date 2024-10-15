@@ -34,6 +34,16 @@ spec:
                 secretKeyRef:
                   name: server-secret
                   key: ai-server-base-url
+            - name: SPRING_SERVER_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: server-secret
+                  key: spring-server-base-url
+            - name: CLIMATE_DATA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: server-secret
+                  key: climate-data-api-key
       imagePullSecrets:
         - name: regcred
 

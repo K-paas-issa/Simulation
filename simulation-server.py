@@ -14,8 +14,25 @@ region_name = 'kr-standard'
 access_key = os.getenv('NCP_ACCESSKEY')
 secret_key = os.getenv('NCP_SECRETKEY')
 ai_server_base_url = os.getenv('AI_SERVER_BASE_URL')
+spring_server_base_url = os.getenv('SPRING_SERVER_BASE_URL')
+climate_data_api_key = os.getenv('CLIMATE_DATA_API_KEY')
 
 app = FastAPI()
+
+@app.get("/climate-data-get")
+def get_climate_data():
+    headers = {
+        'BK-API-KEY': climate_data_api_key,  # 예시: Bearer 토큰
+        'Content-Type': 'application/json'
+    }
+    resp = requests.get(url=ai_server_base_url + '/api/climate/data-path',
+                        headers=headers)  # headers 추가
+    
+    if resp.status_code == 200:
+        res_json = resp.json()
+        return simulation_body(res_json['dataPath'])
+    else:
+        return False
 
 @app.get("/climate-data")
 def simulation(object_name: str, background_tasks: BackgroundTasks):
