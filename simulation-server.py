@@ -29,9 +29,10 @@ def simulation_test():
         'BK-API-KEY': climate_data_api_key,  # 예시: Bearer 토큰
         'Content-Type': 'application/json'
     }
+    print('climate data get request start')
     resp = requests.get(url=ai_server_base_url + '/api/climate/data-path',
                         headers=headers)  # headers 추가
-    
+    print('climate data get request end')
     if resp.status_code == 200:
         print('spring request success')
         res_json = resp.json()
@@ -46,6 +47,7 @@ def simulation(object_name: str, background_tasks: BackgroundTasks):
     return Response(status_code=status.HTTP_202_ACCEPTED)
 
 def simulation_body(object_name: str) :
+    print('start simulation body')
     file_name = download_csv(object_name) # simulation_input.csv로 다운받은 상태.
     print(file_name)
 
