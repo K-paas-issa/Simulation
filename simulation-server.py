@@ -20,7 +20,11 @@ climate_data_api_key = os.getenv('CLIMATE_DATA_API_KEY')
 app = FastAPI()
 
 @app.get("/climate-data-get")
-def get_climate_data():
+def get_climate_data(background_tasks: BackgroundTasks):
+    background_tasks.add_task(simulation_test)
+    return Response(status_code=status.HTTP_202_ACCEPTED)
+
+def simulation_test():
     headers = {
         'BK-API-KEY': climate_data_api_key,  # 예시: Bearer 토큰
         'Content-Type': 'application/json'
@@ -29,9 +33,11 @@ def get_climate_data():
                         headers=headers)  # headers 추가
     
     if resp.status_code == 200:
+        print('spring request success')
         res_json = resp.json()
         return simulation_body(res_json['dataPath'])
     else:
+        print('spring request fail')
         return False
 
 @app.get("/climate-data")
