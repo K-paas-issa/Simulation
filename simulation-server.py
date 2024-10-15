@@ -25,21 +25,24 @@ def get_climate_data(background_tasks: BackgroundTasks):
     return Response(status_code=status.HTTP_202_ACCEPTED)
 
 def simulation_test():
-    headers = {
-        'BK-API-KEY': climate_data_api_key,  # 예시: Bearer 토큰
-        'Content-Type': 'application/json'
-    }
-    print('climate data get request start')
-    resp = requests.get(url=ai_server_base_url + '/api/climate/data-path',
-                        headers=headers)  # headers 추가
-    print('climate data get request end')
-    if resp.status_code == 200:
-        print('spring request success')
-        res_json = resp.json()
-        return simulation_body(res_json['dataPath'])
-    else:
-        print('spring request fail')
-        return False
+    try:
+        headers = {
+            'BK-API-KEY': climate_data_api_key,  # 예시: Bearer 토큰
+            'Content-Type': 'application/json'
+        }
+        print('climate data get request start')
+        resp = requests.get(url=ai_server_base_url + '/api/climate/data-path',
+                            headers=headers)  # headers 추가
+        print('climate data get request end')
+        if resp.status_code == 200:
+            print('spring request success')
+            res_json = resp.json()
+            return simulation_body(res_json['dataPath'])
+        else:
+            print('spring request fail')
+            return False
+    except Exception as e:
+        print(f"Error in simulation_test: {str(e)}")
 
 @app.get("/climate-data")
 def simulation(object_name: str, background_tasks: BackgroundTasks):
