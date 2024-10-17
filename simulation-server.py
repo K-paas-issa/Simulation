@@ -30,9 +30,9 @@ def simulation_test():
             'BK-API-KEY': climate_data_api_key,  # 예시: Bearer 토큰
             'Content-Type': 'application/json'
         }
-        print('climate data get url is   ', ai_server_base_url, '/api/climate/data-path')
+        print('climate data get url is   ', spring_server_base_url, '/api/climate/data-path')
         print('climate data get request start')
-        resp = requests.get(url=ai_server_base_url + '/api/climate/data-path',
+        resp = requests.get(url=spring_server_base_url + '/api/climate/data-path',
                             headers=headers)  # headers 추가
         print('climate data get request end')
         if resp.status_code == 200:
