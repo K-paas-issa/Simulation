@@ -12,6 +12,7 @@ from balloon_learning_environment.env import grid_based_wind_field
 import random
 # @title Generate a wind field
 def main(simulation_input_data):
+    print('tt.py main start, simuation_input_data : ', simulation_input_data)
     wind_field = generative_wind_field.GenerativeWindField
     rng = jax.random.PRNGKey(10)
     df1 = pd.read_csv(simulation_input_data)

@@ -38,6 +38,8 @@ def simulation_test():
         if resp.status_code == 200:
             print('spring request success')
             res_json = resp.json()
+            print('res : ', res_json)
+            print('data path : ', res_json['dataPath'])
             return simulation_body(res_json['dataPath'])
         else:
             print('spring request fail')
@@ -83,11 +85,13 @@ def get_AI_server(simulation_data : dict):
         return False
 
 def simulation_implementation(simulation_input_data):
+    print('simulation_implementation start, simlation_input_data : ', simulation_input_data)
     simulation_output = tt.main(simulation_input_data)
 # 여기다가 시뮬레이션 코드 작성할 것.
     return simulation_output
 
 def download_csv(object_name):
+    print('download_csv start, data-path : ', object_name)
     s3 = boto3.client(service_name, endpoint_url=endpoint_url, aws_access_key_id=access_key,
                       aws_secret_access_key=secret_key)
     bucket_name = 'contest73-bucket'
