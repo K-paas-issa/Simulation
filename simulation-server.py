@@ -40,6 +40,8 @@ def simulation_test():
             return simulation_body(res_json['dataPath'])
         else:
             print('spring request fail')
+            print(resp.status_code)
+            print(resp.text)
             return False
     except Exception as e:
         print(f"Error in simulation_test: {str(e)}")
