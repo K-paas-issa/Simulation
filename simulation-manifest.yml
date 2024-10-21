@@ -44,6 +44,11 @@ spec:
                 secretKeyRef:
                   name: server-secret
                   key: climate-data-api-key
+            - name: DISASTER_DATA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: server-secret
+                  key: disaster-data-api-key
       imagePullSecrets:
         - name: regcred
 
