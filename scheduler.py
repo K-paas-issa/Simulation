@@ -12,10 +12,10 @@ disaster_data_api_key = os.getenv('DISASTER_DATA_API_KEY')
 def check_keyword():
     today = datetime.now().strftime('%Y%m%d')
     payloads = {
-        "serviceKey" : '582B3Q42V5844S73', # disaster_data_api_key로 대체
+        "serviceKey" : disaster_data_api_key, # disaster_data_api_key로 대체
         "returnType" : 'json',
         "pageNo": '1',
-        'numOfRows' : '30',
+        'numOfRows' : '50',
         'crtDt' : today
     }
     response = requests.get(disaster_data_url, params=payloads)
@@ -51,6 +51,7 @@ def check_keyword():
     return learning_flag
 
 def check_keyword_and_run_simulation():
+    print('scheduling start')
     is_exist_data = check_keyword()
     print('is_exist_data : ', is_exist_data)
     if is_exist_data:
