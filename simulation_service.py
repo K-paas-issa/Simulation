@@ -60,6 +60,6 @@ async def simulation_body(object_name: str) :
             print('reqeust success')
         else:
             print('request fail')
-        await time.sleep(180)
+        await time.sleep(10)
         
         
