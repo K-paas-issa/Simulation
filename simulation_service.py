@@ -40,7 +40,7 @@ def simulation_start():
     simulation_body(data_path)
     return
 
-def simulation_body(object_name: str) :
+async def simulation_body(object_name: str) :
     print('start simulation body')
     file_name = s3utils.download_csv(object_name) # simulation_input.csv로 다운받은 상태.
     print(file_name)
@@ -60,6 +60,6 @@ def simulation_body(object_name: str) :
             print('reqeust success')
         else:
             print('request fail')
-        time.sleep(1)
+        await time.sleep(180)
         
         
