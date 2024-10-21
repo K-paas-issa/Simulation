@@ -47,7 +47,7 @@ def simulation_body(object_name: str) :
 
     # 실질적으로 이 함수 내부에서 시뮬레이션 하는 코드 작성할 것. csv도 알아서 접근할 것.
     # 이 함수에서 시뮬레이션 돌려서 나온 값을 csv로 저장. csv이름은 simulation_output.csv로 할 것.
-    for i in range(10):
+    for i in range(5): #임시로 5번 TODO : 10번으로 바꾸기
         simulation_output = tt.main(file_name)
 
     # simulation_output_ + 현재 시간 + .csv 형식으로 파일 업로드
