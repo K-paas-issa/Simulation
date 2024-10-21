@@ -49,6 +49,20 @@ spec:
                 secretKeyRef:
                   name: server-secret
                   key: disaster-data-api-key
+            - name: MYSQL_HOST
+              value: "my-mysql-service"
+            - name: MYSQL_PORT
+              value: "13006"
+            - name: MYSQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
       imagePullSecrets:
         - name: regcred
 
