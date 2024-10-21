@@ -8,7 +8,7 @@ mysql_host = os.getenv('MYSQL_HOST')
 mysql_port = os.getenv('MYSQL_PORT')
 dbname = 'bklocal'
 
-DB_URL = f'mysql+pymysql://root:1234@localhost:3306/bklocal'
+DB_URL = f'mysql+pymysql://{mysql_username}:{mysql_password}@{mysql_host}:{mysql_port}/{dbname}'
 
 class engineconn:
 

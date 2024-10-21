@@ -3,6 +3,7 @@ import requests
 import s3utils
 import learning_client
 import tt
+import time
 
 spring_server_base_url = os.getenv('SPRING_SERVER_BASE_URL')
 climate_data_api_key = os.getenv('CLIMATE_DATA_API_KEY')
@@ -46,15 +47,19 @@ def simulation_body(object_name: str) :
 
     # 실질적으로 이 함수 내부에서 시뮬레이션 하는 코드 작성할 것. csv도 알아서 접근할 것.
     # 이 함수에서 시뮬레이션 돌려서 나온 값을 csv로 저장. csv이름은 simulation_output.csv로 할 것.
-    simulation_output = tt.main(file_name)
+    for i in range(10):
+        simulation_output = tt.main(file_name)
 
     # simulation_output_ + 현재 시간 + .csv 형식으로 파일 업로드
     # upload_csv 응답값 : ncp object에 올라간 시뮬레이션 csv파일 경로
-    upload_simulation_data_res = s3utils.upload_csv(simulation_output) 
-    print(upload_simulation_data_res)
+        upload_simulation_data_res = s3utils.upload_csv(simulation_output) 
+        print(upload_simulation_data_res)
 
-    final_res = learning_client.get_AI_server({'path' : upload_simulation_data_res}) # AI서버로 http 통신 날리기
-    if final_res==True:
-        print('reqeust success')
-    else:
-        print('request fail')
+        final_res = learning_client.get_AI_server({'path' : upload_simulation_data_res}) # AI서버로 http 통신 날리기
+        if final_res==True:
+            print('reqeust success')
+        else:
+            print('request fail')
+        time.sleep(1)
+        
+        
