@@ -3,7 +3,7 @@ import requests
 import s3utils
 import learning_client
 import tt
-import time
+import asyncio
 
 spring_server_base_url = os.getenv('SPRING_SERVER_BASE_URL')
 climate_data_api_key = os.getenv('CLIMATE_DATA_API_KEY')
@@ -60,6 +60,6 @@ async def simulation_body(object_name: str) :
             print('reqeust success')
         else:
             print('request fail')
-        await time.sleep(10)
+        await asyncio.sleep(10)
         
         
