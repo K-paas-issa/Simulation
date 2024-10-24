@@ -35,7 +35,7 @@ def check_keyword():
     
     for element in data:
         message = element['MSG_CN']
-        if '오물 풍선' in message or '오물풍선' in message:
+        if '오물 풍선' in message or '오물풍선' in message or '쓰레기풍선' in message or '쓰레기 풍선' in message or ('북한' in message and '쓰레기' in message) or ('북한' in message and '오물' in message):
             if repo.existBySn(element['SN']):
                 continue
             disaster_notification = DisasterNotification(
