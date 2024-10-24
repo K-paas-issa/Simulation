@@ -3,6 +3,7 @@ import requests
 import s3utils
 import learning_client
 import tt
+import asyncio
 
 spring_server_base_url = os.getenv('SPRING_SERVER_BASE_URL')
 climate_data_api_key = os.getenv('CLIMATE_DATA_API_KEY')
@@ -33,13 +34,13 @@ def get_simulation_data_path():
     except Exception as e:
         print(f"Error in simulation_test: {str(e)}")
 
-def simulation_start():
+async def simulation_start():
     print('simulation_start')
     data_path = get_simulation_data_path()
-    simulation_body(data_path)
+    await simulation_body(data_path)
     return
 
-def simulation_body(object_name: str) :
+async def simulation_body(object_name: str) :
     print('start simulation body')
     file_name = s3utils.download_csv(object_name) # simulation_input.csv로 다운받은 상태.
     print(file_name)
@@ -59,5 +60,5 @@ def simulation_body(object_name: str) :
             print('reqeust success')
         else:
             print('request fail')
-        
+        await asyncio.sleep(90)
         

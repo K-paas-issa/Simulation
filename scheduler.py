@@ -5,6 +5,7 @@ import disaster_repository as repo
 import requests
 import os
 import simulation_service
+import asyncio
 
 disaster_data_url = 'https://www.safetydata.go.kr/V2/api/DSSP-IF-00247'
 disaster_data_api_key = os.getenv('DISASTER_DATA_API_KEY')
@@ -50,18 +51,21 @@ def check_keyword():
         
     return learning_flag
 
-def check_keyword_and_run_simulation():
+async def check_keyword_and_run_simulation():
     print('scheduling start')
     is_exist_data = check_keyword()
     print('is_exist_data : ', is_exist_data)
     if is_exist_data:
         #시뮬레이션 시작
         print('detect disaster keyword. start simulation')
-        simulation_service.simulation_start()
+        await simulation_service.simulation_start()
     else:
         print('does not detect disaster keyword')
 
+def run_async():
+    asyncio.run(check_keyword_and_run_simulation())
+
 # 스케줄러 설정
 scheduler = BackgroundScheduler()
-scheduler.add_job(check_keyword_and_run_simulation, 'interval', minutes=5)
+scheduler.add_job(run_async, 'interval', minutes=5)
 scheduler.start()
